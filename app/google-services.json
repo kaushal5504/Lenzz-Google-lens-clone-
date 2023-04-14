@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "928036024621",
+    "project_id": "lenzz-726d4",
+    "storage_bucket": "lenzz-726d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928036024621:android:1c92b194f8f01cd21823a4",
+        "android_client_info": {
+          "package_name": "com.tech.lenzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928036024621-v4jk4fe75ndtm005h80r42vsblgibhu9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq1eYGbvgi3Bq0C5S8c8ovyZVXc2vpoYM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928036024621-v4jk4fe75ndtm005h80r42vsblgibhu9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
