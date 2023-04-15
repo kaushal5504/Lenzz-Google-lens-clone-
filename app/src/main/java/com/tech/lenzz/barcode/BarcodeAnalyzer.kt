@@ -1,19 +1,35 @@
 package com.tech.lenzz.barcode
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
+import android.widget.TextView
+import android.widget.Toast
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
+import com.google.mlkit.vision.barcode.BarcodeScanner
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 
 class BarcodeAnalyzer :ImageAnalysis.Analyzer{
-    val scanner = BarcodeScanning.getClient()
+
 
 
     @SuppressLint("UnsafeOptInUsageError")
     override fun analyze(imageProxy: ImageProxy) {
-        Log.d("Barcode","image analysed")
+        val options = BarcodeScannerOptions.Builder()
+            .setBarcodeFormats(
+                Barcode.FORMAT_QR_CODE,
+                Barcode.FORMAT_AZTEC)
+            .build()
+
+        val scanner = BarcodeScanning.getClient(options)
+
+        Log.d("BARCODE","barcode analysed")
+//        val activity = BarcodeActivity()
+//        Toast.makeText(activity,"barcode analysed",Toast.LENGTH_SHORT).show()
 
         imageProxy?.image?.let{
 
@@ -21,9 +37,29 @@ class BarcodeAnalyzer :ImageAnalysis.Analyzer{
                 it,
                 imageProxy.imageInfo.rotationDegrees
             )
-            scanner.process(inputImage)
-                .addOnSuccessListener {
-                    it.forEach{barcode->
+            val result = scanner.process(inputImage)
+                .addOnSuccessListener {barcodes->
+                    for (barcode in barcodes) {
+                        val bounds = barcode.boundingBox
+                        val corners = barcode.cornerPoints
+
+                        val rawValue = barcode.rawValue
+
+                        val valueType = barcode.valueType
+                        // See API reference for complete list of supported types
+                        when (valueType) {
+                            Barcode.TYPE_WIFI -> {
+                                val ssid = barcode.wifi!!.ssid
+                                val password = barcode.wifi!!.password
+                                val type = barcode.wifi!!.encryptionType
+                            }
+                            Barcode.TYPE_URL -> {
+                                val title = barcode.url!!.title
+                                val url = barcode.url!!.url
+                            }
+                        }
+                    }
+                    barcodes.forEach{barcode->
                         Log.d("BARCODE","""
                             Format =${barcode.format}
                             Value =${barcode.rawValue}
@@ -39,13 +75,14 @@ class BarcodeAnalyzer :ImageAnalysis.Analyzer{
 
                 }
                 .addOnCompleteListener {
-                    imageProxy.close()
+                  //  imageProxy.close()
                 }
 
         }?: imageProxy.close() //close if image not found
 
 
-        imageProxy.close()
+
+        //imageProxy.close()
 
     }
 }
