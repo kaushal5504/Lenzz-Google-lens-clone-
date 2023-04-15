@@ -9,7 +9,9 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tech.lenzz.barcode.BarcodeActivity
 import com.tech.lenzz.databinding.ActivityMainBinding
+import com.tech.lenzz.faceDetect.FaceDetectActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -62,6 +64,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        }
+        mainBinding.buttonBarcodeScan.setOnClickListener {
+            startActivity(Intent(this@MainActivity,BarcodeActivity::class.java))
+        }
+        mainBinding.FaceDetect.setOnClickListener {
+            startActivity(Intent(this,FaceDetectActivity::class.java))
         }
 
 
