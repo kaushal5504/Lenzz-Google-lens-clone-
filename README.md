@@ -1,4 +1,4 @@
-# <div align="center"><img src="app/src/main/res/drawable/icon_main.png" alt="icon" width=40> Google Lens App </div>
+# <div align="center"><img src="app/src/main/res/drawable/generatedlogo.png" alt="icon" width=40> Google Lens App </div>
 
  ![flutter](https://img.shields.io/badge/kotlin-language-blue?logo=kotlin)
  ![mlkit](https://img.shields.io/badge/MLKit-API-orange?logo=ML-kit)
