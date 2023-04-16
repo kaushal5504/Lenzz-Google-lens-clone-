@@ -46,6 +46,9 @@ class BarcodeAnalyzer :ImageAnalysis.Analyzer{
                         val rawValue = barcode.rawValue
 
                         val valueType = barcode.valueType
+
+                        Log.d("BARCODE",
+                            " Format =${barcode.format} Value =${barcode.rawValue}".trimIndent())
                         // See API reference for complete list of supported types
                         when (valueType) {
                             Barcode.TYPE_WIFI -> {
@@ -58,14 +61,9 @@ class BarcodeAnalyzer :ImageAnalysis.Analyzer{
                                 val url = barcode.url!!.url
                             }
                         }
-                    }
-                    barcodes.forEach{barcode->
-                        Log.d("BARCODE","""
-                            Format =${barcode.format}
-                            Value =${barcode.rawValue}
-                            """.trimIndent())
 
                     }
+
 
 
                 }
@@ -75,14 +73,14 @@ class BarcodeAnalyzer :ImageAnalysis.Analyzer{
 
                 }
                 .addOnCompleteListener {
-                  //  imageProxy.close()
+                    imageProxy.close()
                 }
 
         }?: imageProxy.close() //close if image not found
 
 
 
-        //imageProxy.close()
+        imageProxy.close()
 
     }
 }

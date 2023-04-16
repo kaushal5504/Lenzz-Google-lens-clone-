@@ -2,18 +2,26 @@ package com.tech.lenzz
 
 import android.Manifest
 import android.content.pm.PackageManager
+
 import android.os.Bundle
 import android.util.Log
+
 import android.view.View
+
 import android.widget.Button
+
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
+import androidx.camera.core.Preview.SurfaceProvider
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.viewbinding.ViewBinding
+
+
 
 
 abstract class BaseLensActivity : AppCompatActivity()
@@ -43,6 +51,8 @@ abstract class BaseLensActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lens)
 
+
+
         askCameraPermission()
 
          val btnStartScanner : Button =findViewById(R.id.btnTakePhoto)
@@ -52,7 +62,10 @@ abstract class BaseLensActivity : AppCompatActivity()
 
     }
 
+
     protected fun startCamera() {
+
+        val camPreview: View =findViewById(R.id.viewFinder)
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener(
             Runnable {
@@ -61,8 +74,9 @@ abstract class BaseLensActivity : AppCompatActivity()
                 val preview = Preview.Builder()
                     .build()
                     .also {
-                        val camPreview: View =findViewById(R.id.previewView)
-                        it.setSurfaceProvider(camPreview) //changed createSurfaceProvider()
+
+
+                       //     it?.setSurfaceProvider(camPreview.surfaceProvider) //changed createSurfaceProvider()
                     }
 
                 //imageCapture = ImageCapture.Builder().build()

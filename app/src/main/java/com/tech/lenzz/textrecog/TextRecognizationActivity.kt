@@ -1,12 +1,11 @@
-package com.tech.lenzz.faceDetect
+package com.tech.lenzz.textrecog
 
 import android.Manifest
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
@@ -16,20 +15,23 @@ import androidx.core.content.ContextCompat
 import com.tech.lenzz.BaseLensActivity
 import com.tech.lenzz.barcode.BarcodeActivity
 import com.tech.lenzz.databinding.ActivityBarcodeBinding
-import com.tech.lenzz.databinding.ActivityFaceDetectBinding
+import com.tech.lenzz.databinding.ActivityTextRecognisationBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class FaceDetectActivity : AppCompatActivity() {
+class TextRecognizationActivity : AppCompatActivity(){
     private lateinit var cameraExecutor: ExecutorService
-    companion object{
+    companion object {
+
         @JvmStatic
         val CAMERA_PERM_CODE = 422
     }
 
-    lateinit var faceDetectBinding :ActivityFaceDetectBinding
-    val imageAnalyzer =FaceDetectAnalyzer()
-    private lateinit var imageAnalysis: ImageAnalysis
+    lateinit var textBinding :ActivityTextRecognisationBinding
+
+    val imageAnalyzer =TextAnalyzer()
+    private lateinit var imageAnalysis:ImageAnalysis
+
 
     private fun askCameraPermission() {
         ActivityCompat.requestPermissions(
@@ -38,7 +40,6 @@ class FaceDetectActivity : AppCompatActivity() {
             BarcodeActivity.CAMERA_PERM_CODE
         )
     }
-
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
@@ -49,10 +50,9 @@ class FaceDetectActivity : AppCompatActivity() {
                 val preview = Preview.Builder()
                     .build()
                     .also {
-                        it.setSurfaceProvider(faceDetectBinding.viewFinder.surfaceProvider) //changed createSurfaceProvider()
+                        it.setSurfaceProvider(textBinding.viewFinder.surfaceProvider) //changed createSurfaceProvider()
                     }
                 imageAnalysis = ImageAnalysis.Builder()
-                    .setImageQueueDepth(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
                     .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                     .build()
 
@@ -73,38 +73,26 @@ class FaceDetectActivity : AppCompatActivity() {
     }
 
 
-     fun startScanner()
-    {
-    startFaceDetect()
-
-    }
-    private fun startFaceDetect(){
+     fun startScanner() {
         imageAnalysis.setAnalyzer(
             ContextCompat.getMainExecutor(this),
             imageAnalyzer
         )
-        if(probability<0.15)
-        {
-            Toast.makeText(this,"Are you not smiling ??..",Toast.LENGTH_SHORT).show()
-        }
-        else
-        {
-            Toast.makeText(this,"Yehhh.....happy face??..",Toast.LENGTH_SHORT).show()
-        }
+
+         textBinding.tvRecognisedText.text= textDone
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        faceDetectBinding = ActivityFaceDetectBinding.inflate(layoutInflater)
-        setContentView(faceDetectBinding.root)
+       textBinding = ActivityTextRecognisationBinding.inflate(layoutInflater)
+        setContentView(textBinding.root)
 
         askCameraPermission()
 
-        faceDetectBinding.btnTakePhoto.setOnClickListener { startScanner() }
+        textBinding.btnTakePhoto.setOnClickListener { startScanner() }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-
     }
 
     override fun onRequestPermissionsResult(

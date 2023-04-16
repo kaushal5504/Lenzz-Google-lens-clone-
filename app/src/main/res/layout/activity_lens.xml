@@ -7,26 +7,27 @@
     tools:context=".barcode.BarcodeActivity">
 
     <androidx.camera.view.PreviewView
-        android:id="@+id/previewView"
+        android:id="@+id/viewFinder"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </androidx.camera.view.PreviewView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+
+
+    <Button
         android:id="@+id/btnTakePhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Start Scanning"
+        android:textAllCaps="false"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/button_layout"
-
-
-
-        app:srcCompat="@drawable/baseline_camera_24" />
+        android:background="@drawable/button_layout"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

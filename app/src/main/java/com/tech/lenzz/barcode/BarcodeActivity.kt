@@ -1,27 +1,23 @@
 package com.tech.lenzz.barcode
 
-
 import android.Manifest
-
 import android.content.pm.PackageManager
-
 import android.os.Bundle
-
 import android.util.Log
-
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageAnalysis.Builder
 import androidx.camera.core.ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST
-
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 import com.tech.lenzz.databinding.ActivityBarcodeBinding
-
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 class BarcodeActivity : AppCompatActivity(){
@@ -30,9 +26,13 @@ companion object {
     @JvmStatic
     val CAMERA_PERM_CODE = 422
 }
+    private lateinit var cameraExecutor: ExecutorService
     lateinit var barcodeBinding: ActivityBarcodeBinding
     private  val imageAnalyzer = BarcodeAnalyzer()
-    private lateinit var imageAnalysis: ImageAnalysis
+    private var imageAnalysis = Builder()
+        .setImageQueueDepth(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
+        .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
+        .build()
 
 
 
@@ -57,7 +57,7 @@ companion object {
                     .also {
                         it.setSurfaceProvider(barcodeBinding.viewFinder.surfaceProvider) //changed createSurfaceProvider()
                     }
-                imageAnalysis = ImageAnalysis.Builder()
+                imageAnalysis = Builder()
                     .setBackpressureStrategy(STRATEGY_KEEP_ONLY_LATEST)
                     .build()
 
@@ -97,6 +97,8 @@ companion object {
 
         barcodeBinding.btnTakePhoto.setOnClickListener { scanBarcode() }
 
+        cameraExecutor = Executors.newSingleThreadExecutor()
+
     }
 
     override fun onRequestPermissionsResult(
@@ -118,6 +120,11 @@ companion object {
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
     }
 
 

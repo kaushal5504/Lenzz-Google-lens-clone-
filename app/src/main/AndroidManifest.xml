@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.CAMERA"
+         />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
@@ -13,23 +15,33 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/scannerlogo"
+        android:icon="@drawable/generatedlogo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/image_view_layout"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lenzz"
         tools:targetApi="31">
         <activity
-            android:name=".FaceDetectActivity"
+            android:name=".OptionsActivity"
             android:exported="false" />
         <activity
+            android:name=".faceDetect.FaceDetectActivity"
+            android:exported="false" />
+        <activity android:name=".imageLabeler.ImageLabelingActivity" />
+        <activity
             android:name=".barcode.BarcodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".textrecog.TextRecognizationActivity"
             android:exported="false" />
         <activity
             android:name=".CameraActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +50,7 @@
             </intent-filter>
         </activity> <!-- using firebase meta data -->
         <meta-data
-            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="ocr" />
         <meta-data
             android:name="preloaded_fonts"

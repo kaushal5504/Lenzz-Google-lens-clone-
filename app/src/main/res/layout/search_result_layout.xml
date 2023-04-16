@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/blue"
+    app:cardBackgroundColor="@color/teal_200"
     app:cardCornerRadius="5dp"
     app:cardElevation="7dp">
 
@@ -22,7 +22,7 @@
             android:fontFamily="@font/prompt"
             android:padding="4dp"
             android:text="Title"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
             android:padding="4dp"
             android:text="Snippet"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -50,7 +50,7 @@
             android:maxLines="3"
             android:padding="4dp"
             android:text="Description"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold" />
 
